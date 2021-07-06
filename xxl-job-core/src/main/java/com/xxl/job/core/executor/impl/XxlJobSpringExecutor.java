@@ -81,11 +81,13 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
         if (applicationContext == null) {
             return;
         }
+        // 获取容器中的所有bean
         // init job handler from method
         String[] beanDefinitionNames = applicationContext.getBeanNamesForType(Object.class, false, true);
         for (String beanDefinitionName : beanDefinitionNames) {
             Object bean = applicationContext.getBean(beanDefinitionName);
 
+            // 在容器中的bean中找存在XxlJob注解的方法
             Map<Method, XxlJob> annotatedMethods = null;   // referred to ：org.springframework.context.event.EventListenerMethodProcessor.processBean
             try {
                 annotatedMethods = MethodIntrospector.selectMethods(bean.getClass(),
