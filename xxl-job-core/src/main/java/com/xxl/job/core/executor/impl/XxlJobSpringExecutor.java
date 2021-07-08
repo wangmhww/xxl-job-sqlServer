@@ -34,6 +34,7 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
         // init JobHandler Repository
         /*initJobHandlerRepository(applicationContext);*/
 
+        // 注册jobHandler
         // init JobHandler Repository (for method)
         initJobHandlerMethodRepository(applicationContext);
 
@@ -81,13 +82,14 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
         if (applicationContext == null) {
             return;
         }
-        // 获取容器中的所有bean
+        // 获取容器中的所有bean名称
         // init job handler from method
         String[] beanDefinitionNames = applicationContext.getBeanNamesForType(Object.class, false, true);
         for (String beanDefinitionName : beanDefinitionNames) {
+            // 根据Bean的名称获取容器中对应的Bean
             Object bean = applicationContext.getBean(beanDefinitionName);
 
-            // 在容器中的bean中找存在XxlJob注解的方法
+            // 在容器中的bean中找存在XxlJob注解的方法 找到所有的jobHandler
             Map<Method, XxlJob> annotatedMethods = null;   // referred to ：org.springframework.context.event.EventListenerMethodProcessor.processBean
             try {
                 annotatedMethods = MethodIntrospector.selectMethods(bean.getClass(),
@@ -151,7 +153,7 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
                         throw new RuntimeException("xxl-job method-jobhandler destroyMethod invalid, for[" + bean.getClass() + "#" + executeMethod.getName() + "] .");
                     }
                 }
-
+                // 注册jobHandler
                 // registry jobhandler
                 registJobHandler(name, new MethodJobHandler(bean, executeMethod, initMethod, destroyMethod));
             }

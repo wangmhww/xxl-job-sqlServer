@@ -24,15 +24,19 @@ public class XxlJobScheduler  {
         // init i18n
         initI18n();
 
+         // 定义快和慢触发器线程池
         // admin trigger pool start
         JobTriggerPoolHelper.toStart();
 
+        // 开启执行器注册线程  执行器没30秒会向任务调度中心发送注册信息 保证执行器在线
         // admin registry monitor run
         JobRegistryHelper.getInstance().start();
 
+        // 执行任务失败处理线程
         // admin fail-monitor run
         JobFailMonitorHelper.getInstance().start();
-
+        
+        // 执行任务成功处理线程
         // admin lose-monitor run ( depend on JobTriggerPoolHelper )
         JobCompleteHelper.getInstance().start();
 

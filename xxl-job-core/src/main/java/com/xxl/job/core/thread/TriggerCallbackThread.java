@@ -63,6 +63,7 @@ public class TriggerCallbackThread {
                 // normal callback
                 while(!toStop){
                     try {
+                        // 获取回调任务
                         HandleCallbackParam callback = getInstance().callBackQueue.take();
                         if (callback != null) {
 

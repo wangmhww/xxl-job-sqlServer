@@ -22,6 +22,11 @@ public class AdminBizImpl implements AdminBiz {
         return JobCompleteHelper.getInstance().callback(callbackParamList);
     }
 
+    /**
+     * 任务调度中心注册执行器
+     * @param registryParam
+     * @return
+     */
     @Override
     public ReturnT<String> registry(RegistryParam registryParam) {
         return JobRegistryHelper.getInstance().registry(registryParam);

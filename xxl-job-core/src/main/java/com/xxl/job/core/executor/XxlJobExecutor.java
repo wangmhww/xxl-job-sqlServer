@@ -64,19 +64,23 @@ public class XxlJobExecutor  {
     // ---------------------- start + stop ----------------------
     public void start() throws Exception {
 
+        // 初始化日志路径
         // init logpath
         XxlJobFileAppender.initLogPath(logPath);
 
+        // 初始化任务管理中心客户端
         // init invoker, admin-client
         initAdminBizList(adminAddresses, accessToken);
 
 
+        // 日志文件清理线程
         // init JobLogFileCleanThread
         JobLogFileCleanThread.getInstance().start(logRetentionDays);
 
         // init TriggerCallbackThread
         TriggerCallbackThread.getInstance().start();
 
+        // 使用netty向任务调度中心注册jobHandler
         // init executor-server
         initEmbedServer(address, ip, port, appname, accessToken);
     }

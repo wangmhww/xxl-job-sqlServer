@@ -84,7 +84,7 @@ public class EmbedServer {
                     ChannelFuture future = bootstrap.bind(port).sync();
 
                     logger.info(">>>>>>>>>>> xxl-job remoting server start success, nettype = {}, port = {}", EmbedServer.class, port);
-
+                    // 开始循环的给任务调度发送注册信息  默认30秒一次
                     // start registry
                     startRegistry(appname, address);
 

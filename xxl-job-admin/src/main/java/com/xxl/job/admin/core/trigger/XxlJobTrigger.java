@@ -76,6 +76,7 @@ public class XxlJobTrigger {
                 shardingParam[1] = Integer.valueOf(shardingArr[1]);
             }
         }
+        //分片模式
         if (ExecutorRouteStrategyEnum.SHARDING_BROADCAST==ExecutorRouteStrategyEnum.match(jobInfo.getExecutorRouteStrategy(), null)
                 && group.getRegistryList()!=null && !group.getRegistryList().isEmpty()
                 && shardingParam==null) {

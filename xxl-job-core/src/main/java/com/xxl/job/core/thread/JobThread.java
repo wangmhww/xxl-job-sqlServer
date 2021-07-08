@@ -159,6 +159,7 @@ public class JobThread extends Thread{
 							futureThread.interrupt();
 						}
 					} else {
+						// 执行任务
 						// just execute
 						handler.execute();
 					}
@@ -200,6 +201,7 @@ public class JobThread extends Thread{
 
 				XxlJobHelper.log("<br>----------- JobThread Exception:" + errorMsg + "<br>----------- xxl-job job execute end(error) -----------");
 			} finally {
+            	// 执行回调
                 if(triggerParam != null) {
                     // callback handler info
                     if (!toStop) {

@@ -58,16 +58,18 @@ public class JobRegistryHelper {
 			public void run() {
 				while (!toStop) {
 					try {
+						// 查询自动注册的任务组
 						// auto registry group
 						List<XxlJobGroup> groupList = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().findByAddressType(0);
 						if (groupList!=null && !groupList.isEmpty()) {
 
+							// 删除掉线的执行器
 							// remove dead address (admin/executor)
 							List<Integer> ids = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findDead(RegistryConfig.DEAD_TIMEOUT, new Date());
 							if (ids!=null && ids.size()>0) {
 								XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().removeDead(ids);
 							}
-
+							// 刷新在线的执行器
 							// fresh online address (admin/executor)
 							HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>();
 							List<XxlJobRegistry> list = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
@@ -145,7 +147,7 @@ public class JobRegistryHelper {
 
 
 	// ---------------------- helper ----------------------
-
+	// 向数据库中插入执行器
 	public ReturnT<String> registry(RegistryParam registryParam) {
 
 		// valid
